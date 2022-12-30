@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<id>org.woofer</id>
+	<metadata_license>GFDL-1.3-or-later</metadata_license>
+	<project_license>GPL-3.0-or-later</project_license>
+
+	<name>LibWoofer</name>
+	<project_group>Project Woofer</project_group>
+	<url type="homepage">https://github.com/woofer-org/libwoofer</url>
+	<icon type="stock">woofer</icon>
+	<summary>The configurable intelligent music player - Core application library</summary>
+
+	<description>
+		<p>
+			Flexible, efficient and universal music player for GNU+Linux that gives
+			you the tools to automate the playback of your music collection.
+		</p>
+	</description>
+
+	<categories>
+		<category>AudioVideo</category>
+		<category>Audio</category>
+		<category>Player</category>
+		<category>Music</category>
+	</categories>
+
+	<provides>
+		<library>libwoofer.so</library>
+		<mediatype>audio/*</mediatype>
+		<dbus type="user">org.woofer</dbus>
+	</provides>
+
+	<requires>
+		<id version="2.0">GLib 2.0</id>
+		<id version="1.0">GStreamer</id>
+	</requires>
+</component>

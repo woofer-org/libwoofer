@@ -1,0 +1,16 @@
+Installation Instructions
+*************************
+
+The preferred way to compile is using the well-known `./configure && make`.  The
+generated configure script from Autoconf will run a couple of tests and search
+for the right dependencies.  When it finishes successfully, a Makefile is
+generated that can be used by Make to compile the source code.
+
+If you want to install the compiled library, header files and a few other files
+into your system, executing `sudo make install` is all you need to do. Keep in
+mind that when you have configured the project with `./configure` and no
+arguments, the default prefix is set to `/usr/local`. This is the base directory
+under which the compiled and configured files will be installed. By proving
+`./configure` with the argument `--prefix=/path`, a different prefix can be
+chosen to use when installing.  For example, to install in the same way as
+system packages, use `./configure --prefix=/usr`.

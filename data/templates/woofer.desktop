@@ -1,0 +1,41 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Woofer Music Player
+GenericName=Music Player
+Comment=The configurable intelligent music player
+Icon=woofer
+TryExec=woofer
+Exec=woofer %U
+Actions=play-pause;play;pause;stop;previous;next;background;
+MimeType=audio/*;
+Categories=AudioVideo;Audio;Player;Music;
+StartupNotify=true
+
+[Desktop Action play-pause]
+Name=Play/Pause
+Exec=woofer --play-pause %U
+
+[Desktop Action play]
+Name=Play
+Exec=woofer --play %U
+
+[Desktop Action pause]
+Name=Pause
+Exec=woofer --pause %U
+
+[Desktop Action stop]
+Name=Stop
+Exec=woofer --stop %U
+
+[Desktop Action previous]
+Name=Previous
+Exec=woofer --previous %U
+
+[Desktop Action next]
+Name=Next
+Exec=woofer --next %U
+
+[Desktop Action background]
+Name=Background
+Exec=woofer --background %U

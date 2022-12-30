@@ -1,0 +1,29 @@
+*~
+
+# Text editor swap files
+*.swp
+
+# Compiler objects and binaries
+build/*
+*.out
+*.o
+*.a
+*.i
+*.s
+
+# Archive files
+*.tar
+*.tar.gz
+
+# Autotools files
+autom4te.cache
+aclocal.m4
+config.log
+config.status
+Makefile
+
+# Editor specific files
+.settings
+.project
+.cproject
+.vscode

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+	<name>LibWoofer</name>
+	<homepage rdf:resource="https://github.com/woofer-org/libwoofer" />
+	<created>2021</created>
+	<shortdesc xml:lang="en">
+		The configurable intelligent music player - Core application library
+	</shortdesc>
+	<description xml:lang="en">
+		Flexible, efficient and universal music player for GNU+Linux that gives
+		you the tools to automate the playback of your music collection.
+	</description>
+	<programming-language>C</programming-language>
+
+	<release>
+		<Version>
+			<name>development</name>
+			<revision>0.1.0</revision>
+		</Version>
+	</release>
+
+	<license rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later" />
+
+	<repository>
+		<GitRepository>
+			<location rdf:resource="https://github.com/woofer-org/libwoofer.git"/>
+			<browse rdf:resource="https://github.com/woofer-org/libwoofer"/>
+		</GitRepository>
+	</repository>
+</Project>

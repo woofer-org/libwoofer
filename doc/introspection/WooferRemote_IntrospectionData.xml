@@ -1,0 +1,42 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+ "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/org/woofer">
+  <interface name="org.woofer.app">
+    <method name="Quit" />
+    <method name="Raise" />
+    <method name="RefreshMetadata">
+      <arg name="Amount" type="i" direction="out" />
+    </method>
+    <method name="AddSong">
+      <arg name="URI" type="s" direction="in" />
+      <arg name="Added" type="i" direction="out" />
+    </method>
+  </interface>
+  <interface name="org.woofer.player">
+    <method name="SetPlaying">
+      <arg name="Song" type="u" direction="in" />
+    </method>
+    <method name="SetQueue">
+      <arg name="Song" type="u" direction="in" />
+      <arg name="Queue" type="b" direction="in" />
+    </method>
+    <method name="StopAfterSong">
+      <arg name="Song" type="u" direction="in" />
+    </method>
+    <method name="Seek">
+      <arg name="Percentage" type="d" direction="in" />
+    </method>
+    <method name="Play" />
+    <method name="Pause" />
+    <method name="PlayPause" />
+    <method name="Backward" />
+    <method name="Forward" />
+    <method name="Stop" />
+    <property name="SongPrevious" type="u" access="read" />
+    <property name="SongPlaying" type="u" access="read" />
+    <property name="SongNext" type="u" access="read" />
+    <property name="Incognito" type="b" access="readwrite" />
+    <property name="Volume" type="d" access="readwrite" />
+    <property name="Position" type="d" access="readwrite" />
+  </interface>
+</node>
