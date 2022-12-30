@@ -27,18 +27,24 @@ the 'Releases' section of the repository on GitHub.
 If you want to test the latest stable features, clone the Git repository and use
 the 'master' branch using:
 
-`git clone https://github.com/woofer-org/libwoofer.git -b master`
+```sh
+git clone https://github.com/woofer-org/libwoofer.git -b master
+```
 
 If you want to develop using the latest and greatest changes, use the 'develop'
 branch:
 
-`git clone https://github.com/woofer-org/libwoofer.git -b develop`
+```sh
+git clone https://github.com/woofer-org/libwoofer.git -b develop
+```
 
 ## Compiling
 
 Executing
 
-`./configure && make`
+```sh
+./configure && make
+```
 
 should be able to configure and compile the software on various systems and
 environments and should only require minimal effort from the user.  Further
@@ -55,7 +61,9 @@ process a little bit, a file called [envsetup.sh](envsetup.sh) is written that
 automatically sets these flags to the location of this repository.  All you need
 to do is sourcing the file like:
 
-`source ./envsetup.sh`
+```sh
+source ./envsetup.sh
+```
 
 This will set the right flags in environmental variables of the current shell
 session.  You can then follow the instructions of the front-end project on how
