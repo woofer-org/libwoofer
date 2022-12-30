@@ -6,6 +6,10 @@ generated configure script from Autoconf will run a couple of tests and search
 for the right dependencies.  When it finishes successfully, a Makefile is
 generated that can be used by Make to compile the source code.
 
+If `./configure` complains about missing necessary dependencies, you need to
+install them.  The packages needed for your distribution are listed in the
+system package reference of the software's documentation.
+
 If you want to install the compiled library, header files and a few other files
 into your system, executing `sudo make install` is all you need to do. Keep in
 mind that when you have configured the project with `./configure` and no

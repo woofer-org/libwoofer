@@ -43,7 +43,8 @@ Executing
 should be able to configure and compile the software on various systems and
 environments and should only require minimal effort from the user.  Further
 compilation instructions can be found in the [INSTALL](INSTALL) file or the
-software's documentation.
+software's documentation.  Dependency packages required to compile can be found
+in the documentation under section [System Packages](doc/System-Packages.md).
 
 ## Front-end linking
 
