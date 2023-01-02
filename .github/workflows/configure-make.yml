@@ -1,0 +1,19 @@
+name: Configure and Make
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes --quiet libglib2.0-dev libgstreamer1.0-dev
+    - name: Configure build
+      run: ./configure
+    - name: Compile
+      run: make
+
