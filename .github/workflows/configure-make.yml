@@ -10,6 +10,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Install dependencies
+      run: sudo apt-get install libglib2.0-dev libgstreamer1.0-dev
     - name: Configure build
       run: ./configure
     - name: Compile
