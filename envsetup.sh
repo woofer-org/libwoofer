@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 # envsetup.sh  This file is part of LibWoofer
-# Copyright (C) 2022  Quico Augustijn
+# Copyright (C) 2022, 2023  Quico Augustijn
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 # compiler and linker flags.  This makes compiling, linking and running
 # front-ends very simple without installing anything.
 
-REALPATH=`realpath "${0}"`
-DIR=`dirname "${REALPATH}"`
+REALPATH=`realpath -- "${0}"`
+DIR=`dirname -- "${REALPATH}"`
 
 export LD_LIBRARY_PATH="${DIR}/build"
 export CFLAGS="-I${DIR}/src"
