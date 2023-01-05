@@ -37,11 +37,14 @@ CC ?= gcc
 LD ?= ld
 AR ?= ar
 MKDIR_P = mkdir -p
+LN_S = ln -s
 
 # Build information
 TAG = lib$(TARNAME)
 OUT_SHARED ?= $(TAG).so.$(PACKAGE_VERSION)
 OUT_STATIC ?= $(TAG).a
+LINK_SHARED1 ?= $(TAG).so.$(VERSION_MAJOR)
+LINK_SHARED2 ?= $(TAG).so
 DIST_PKG = $(TAG)-$(PACKAGE_VERSION)
 
 # Dependencies and targets
@@ -71,6 +74,7 @@ DATA_DIR = data
 # Final library target
 TARGET_SHARED ?= $(BUILD_DIR)/$(OUT_SHARED)
 TARGET_STATIC ?= $(BUILD_DIR)/$(OUT_STATIC)
+TARGET_LINKS ?= $(BUILD_DIR)/$(LINK_SHARED1) $(BUILD_DIR)/$(LINK_SHARED2)
 
 # Get library linking flags
 PKG_CFLAGS := `pkg-config --cflags $(DEPENDENCIES)`
@@ -88,7 +92,7 @@ vpath %.h $(SRC_DIR)
 .PHONY: all resources clean distclean mostlyclean maintainer-clean dist
 
 # Default target
-all: $(TARGET_SHARED) $(TARGET_STATIC)
+all: $(TARGET_SHARED) $(TARGET_STATIC) $(TARGET_LINKS)
 
 # Final shared library linkage
 $(TARGET_SHARED): $(OBJS)
@@ -99,6 +103,10 @@ $(TARGET_SHARED): $(OBJS)
 $(TARGET_STATIC): $(OBJS)
 	@$(MKDIR_P) $(@D)
 	$(AR) $(ARFLAGS) $@ $^
+
+# Shared library symbolic link creation
+$(TARGET_LINKS): $(TARGET_SHARED)
+	$(LN_S) $^ $@
 
 # Library object compilation
 $(BUILD_DIR)/%.o: %.c %.h
