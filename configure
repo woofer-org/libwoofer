@@ -650,6 +650,9 @@ CPPFLAGS
 LDFLAGS
 CFLAGS
 CC
+VERSION_PATCH
+VERSION_MINOR
+VERSION_MAJOR
 target_alias
 host_alias
 build_alias
@@ -2195,6 +2198,14 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
+
+
+# Version variables
+VERSION_MAJOR=0
+
+VERSION_MINOR=1
+
+VERSION_PATCH=0
 
 
 # Checks for programs

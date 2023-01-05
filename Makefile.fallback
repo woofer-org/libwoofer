@@ -29,7 +29,10 @@ SHELL = /bin/sh
 # Variables
 NAME ?= Woofer
 TARNAME ?= woofer
-VERSION ?= 0.1.0
+VERSION_MAJOR = 0
+VERSION_MINOR = 1
+VERSION_PATCH = 0
+PACKAGE_VERSION ?= $(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)
 CC ?= gcc
 LD ?= ld
 AR ?= ar
@@ -37,9 +40,9 @@ MKDIR_P = mkdir -p
 
 # Build information
 TAG = lib$(TARNAME)
-OUT_SHARED ?= $(TAG).so
+OUT_SHARED ?= $(TAG).so.$(PACKAGE_VERSION)
 OUT_STATIC ?= $(TAG).a
-DIST_PKG = $(TAG)-$(VERSION)
+DIST_PKG = $(TAG)-$(PACKAGE_VERSION)
 
 # Dependencies and targets
 DEPENDENCIES = glib-2.0 gio-2.0 gobject-2.0 gstreamer-1.0
