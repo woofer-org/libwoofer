@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  *
  * settings.c  This file is part of LibWoofer
- * Copyright (C) 2021, 2022  Quico Augustijn
+ * Copyright (C) 2021-2023  Quico Augustijn
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -604,7 +604,7 @@ wf_settings_static_get_by_type(WfSettingType setting, WfSettingValueType type, W
 {
 	WfStaticSetting *item = wf_settings_static_get_struct(setting);
 
-	return wf_settings_static_get_internal(item, type, value);
+	wf_settings_static_get_internal(item, type, value);
 }
 
 static void
