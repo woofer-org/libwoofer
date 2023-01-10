@@ -25,9 +25,7 @@ AC_PREREQ(2.69)
 AC_INIT([LibWoofer], [0.1.0], [quico.public@gmail.com], [woofer], [https://github.com/woofer-org/libwoofer])
 
 # Version variables
-AC_SUBST([VERSION_MAJOR], [0])
-AC_SUBST([VERSION_MINOR], [1])
-AC_SUBST([VERSION_PATCH], [0])
+AC_SUBST([MAJOR_VERSION], [0])
 
 # Checks for programs
 AC_PROG_CC

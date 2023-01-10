@@ -24,9 +24,7 @@ SHELL = /bin/sh
 NAME = @PACKAGE_NAME@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
-VERSION_MAJOR = @VERSION_MAJOR@
-VERSION_MINOR = @VERSION_MINOR@
-VERSION_PATCH = @VERSION_PATCH@
+MAJOR_VERSION = @MAJOR_VERSION@
 CC = @CC@
 AR = @AR@
 EXE_EXT = @EXEEXT@
@@ -82,8 +80,7 @@ mandir = @mandir@
 TAG = lib$(PACKAGE_TARNAME)
 OUT_SHARED ?= $(TAG).so.$(PACKAGE_VERSION)
 OUT_STATIC ?= $(TAG).a
-LINK1_SHARED ?= $(TAG).so.$(VERSION_MAJOR)
-LINK2_SHARED ?= $(TAG).so
+LINK_SHARED ?= $(TAG).so.$(MAJOR_VERSION)
 DIST_PKG = $(TAG)-$(PACKAGE_VERSION)
 INC_DIR = $(includedir)/$(PACKAGE_TARNAME)
 
@@ -114,7 +111,7 @@ DATA_DIR = data
 # Final library target
 TARGET_SHARED ?= $(BUILD_DIR)/$(OUT_SHARED)
 TARGET_STATIC ?= $(BUILD_DIR)/$(OUT_STATIC)
-TARGET_LINKS ?= $(BUILD_DIR)/$(LINK1_SHARED) $(BUILD_DIR)/$(LINK2_SHARED)
+TARGET_LINK ?= $(BUILD_DIR)/$(LINK_SHARED)
 
 # Sources and targets
 OBJS := $(PREREQUISITE_LIB:%=$(BUILD_DIR)/%.$(OBJ_EXT))
@@ -128,7 +125,7 @@ INC_FILES = $(HEADERS:%=$(SRC_DIR)/%)
         maintainer-clean dist installdirs
 
 # Default target
-all: $(TARGET_SHARED) $(TARGET_STATIC) $(TARGET_LINKS)
+all: $(TARGET_SHARED) $(TARGET_STATIC) $(TARGET_LINK)
 
 # Final shared library linkage
 $(TARGET_SHARED): $(OBJS)
@@ -141,7 +138,7 @@ $(TARGET_STATIC): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
 # Shared library symbolic link creation
-$(TARGET_LINKS): $(TARGET_SHARED)
+$(TARGET_LINK): $(TARGET_SHARED)
 	$(LN_S) $^ $@
 
 # Library object compilation
@@ -154,12 +151,14 @@ install:
 	$(MAKE) installdirs
 	$(INSTALL_DATA) $(TARGET_SHARED) $(DESTDIR)$(libdir)/$(OUT_SHARED)
 	$(INSTALL_DATA) $(TARGET_STATIC) $(DESTDIR)$(libdir)/$(OUT_STATIC)
+	$(INSTALL_DATA) $(TARGET_LINK) $(DESTDIR)$(libdir)/$(LINK_SHARED)
 	$(INSTALL_DATA) $(INC_FILES) $(DESTDIR)$(INC_DIR)/
 
 # Uninstall installed files
 uninstall:
 	-rm -fv $(DESTDIR)$(libdir)/$(OUT_SHARED)
 	-rm -fv $(DESTDIR)$(libdir)/$(OUT_STATIC)
+	-rm -fv $(DESTDIR)$(libdir)/$(LINK_SHARED)
 	-rm -fv $(DESTDIR)$(INC_DIR)/*
 
 # Recompile resource files
