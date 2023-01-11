@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 # @configure_input@
-# Copyright (C) 2022  Quico Augustijn
+# Copyright (C) 2022, 2023  Quico Augustijn
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 VERSION = @PACKAGE_VERSION@
 CC = @CC@
 AR = @AR@
+RANLIB = @RANLIB@
 EXE_EXT = @EXEEXT@
 OBJ_EXT = @OBJEXT@
 INSTALL = @INSTALL@
@@ -133,6 +134,7 @@ $(TARGET_SHARED): $(OBJS)
 $(TARGET_STATIC): $(OBJS)
 	@$(MKDIR_P) $(@D)
 	$(AR) $(ARFLAGS) $@ $^
+	$(RANLIB) $@
 
 # Library object compilation
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/%.h

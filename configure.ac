@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 # configure.ac  This file is part of LibWoofer
-# Copyright (C) 2022  Quico Augustijn
+# Copyright (C) 2022, 2023  Quico Augustijn
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ AC_PROG_CC_STDC
 AC_PROG_INSTALL
 AC_PROG_MKDIR_P
 AC_PROG_LN_S
+AC_PROG_RANLIB
 
 # Add support for precious variable AR
 AC_ARG_VAR([AR], [AR command])
