@@ -137,7 +137,7 @@ $(TARGET_STATIC): $(OBJS)
 	$(RANLIB) $@
 
 # Library object compilation
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/%.h
+$(BUILD_DIR)/%.$(OBJ_EXT): $(SRC_DIR)/%.c $(SRC_DIR)/%.h
 	@$(MKDIR_P) $(@D)
 	$(CC) $(INC_FLAGS) $(MACROS) -fPIC -c $< -o $@ $(PKG_CFLAGS) $(WARN_FLAGS) $(DEBUG_FLAGS) $(CFLAGS) $(CPPFLAGS)
 
