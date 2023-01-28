@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  *
  * settings_private.h  This file is part of LibWoofer
- * Copyright (C) 2021, 2022  Quico Augustijn
+ * Copyright (C) 2021-2023  Quico Augustijn
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,9 +41,6 @@ void wf_settings_init(void);
 /* CONSTRUCTOR PROTOTYPES END */
 
 /* GETTER/SETTER PROTOTYPES BEGIN */
-
-void wf_settings_set_file(const gchar *file_path);
-
 /* GETTER/SETTER PROTOTYPES END */
 
 /* FUNCTION PROTOTYPES BEGIN */

@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  *
  * library.h  This file is part of LibWoofer
- * Copyright (C) 2021, 2022  Quico Augustijn
+ * Copyright (C) 2021-2023  Quico Augustijn
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,6 +61,9 @@ enum _WfLibraryFileChecks
 /* GETTER/SETTER PROTOTYPES BEGIN */
 
 void wf_library_connect_event_stats_updated(WfFuncStatsUpdated cb_func);
+
+void wf_library_set_file(const gchar *file_path);
+const gchar * wf_library_get_file(void);
 
 gboolean wf_library_track_number_column_is_empty(void);
 gboolean wf_library_title_column_is_empty(void);

@@ -564,11 +564,7 @@ wf_settings_init(void)
 
 	SettingsData.default_path = wf_utils_get_config_filepath(WF_SETTINGS_FILENAME, WF_TAG);
 
-	// If unset, set current file path to default
-	if (SettingsData.file_path == NULL)
-	{
-		SettingsData.file_path = SettingsData.default_path;
-	}
+	wf_settings_set_file(SettingsData.default_path);
 
 	SettingsData.general_settings = GeneralSettings;
 	SettingsData.filter_settings = FilterSettings;
@@ -585,18 +581,44 @@ wf_settings_init(void)
 
 /* GETTERS/SETTERS BEGIN */
 
+/**
+ * wf_settings_set_file:
+ * @file_path: (transfer none): path to the settings file to use
+ *
+ * Sets the filepath of the settings file to use.  This file may or may not
+ * actually exist; it will be (over)written whenever settings are changed and
+ * applied.
+ *
+ * Since: 0.2
+ **/
 void
 wf_settings_set_file(const gchar *file_path)
 {
+	g_free(SettingsData.file_path);
+
 	if (file_path == NULL)
 	{
 		// Reset to default
-		SettingsData.file_path = SettingsData.default_path;
+		file_path = SettingsData.default_path;
 	}
-	else
-	{
-		SettingsData.file_path = g_strdup(file_path);
-	}
+
+	// Copy and store new file path
+	SettingsData.file_path = g_strdup(file_path);
+}
+
+/**
+ * wf_settings_get_file:
+ *
+ * Gets the filepath of the settings file in use.
+ *
+ * Returns: (transfer none): path to the current settings file
+ *
+ * Since: 0.2
+ **/
+const gchar *
+wf_settings_get_file(void)
+{
+	return SettingsData.file_path;
 }
 
 static void
@@ -1842,12 +1864,8 @@ wf_settings_finalize(void)
 	// Write any made changes to disk
 	wf_settings_write_if_queued();
 
-	// Free custom path if set
-	if (SettingsData.file_path != SettingsData.default_path) // Compare pointer
-	{
-		g_free(SettingsData.file_path);
-	}
-
+	// Free file data
+	g_free(SettingsData.file_path);
 	g_free(SettingsData.default_path);
 	wf_memory_clear_key_file(&SettingsData.key_file);
 

@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  *
  * library.c  This file is part of LibWoofer
- * Copyright (C) 2021, 2022  Quico Augustijn
+ * Copyright (C) 2021-2023  Quico Augustijn
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,8 +151,6 @@ struct _WfLibraryDetails
 
 /* FUNCTION PROTOTYPES BEGIN */
 
-static gboolean wf_library_file_is_default(void);
-
 static void wf_library_emit_stats_updated(WfLibraryEvents *events);
 
 static GKeyFile * wf_library_new_key_file(void);
@@ -190,11 +188,7 @@ wf_library_init(void)
 
 	LibraryData.default_path = wf_utils_get_config_filepath(WF_LIBRARY_FILENAME, WF_TAG);
 
-	// If unset, set current file path to default
-	if (LibraryData.file_path == NULL)
-	{
-		LibraryData.file_path = LibraryData.default_path;
-	}
+	wf_library_set_file(LibraryData.default_path);
 
 	LibraryData.active = TRUE;
 }
@@ -209,32 +203,44 @@ wf_library_connect_event_stats_updated(WfFuncStatsUpdated cb_func)
 	LibraryData.events.stats_updated = cb_func;
 }
 
+/**
+ * wf_library_set_file:
+ * @file_path: (transfer none): path to the library file to use
+ *
+ * Sets the filepath of the library file to use.  This file may or may not
+ * actually exist; it will be (over)written whenever library changed are to be
+ * saved.
+ *
+ * Since: 0.2
+ **/
 void
 wf_library_set_file(const gchar *file_path)
 {
-	// Free old string if not default
-	if (!wf_library_file_is_default())
-	{
-		g_free(LibraryData.file_path);
-	}
+	g_free(LibraryData.file_path);
 
 	if (file_path == NULL)
 	{
 		// Reset to default
-		LibraryData.file_path = LibraryData.default_path;
+		file_path = LibraryData.default_path;
 	}
-	else
-	{
-		// Copy and store new file path
-		LibraryData.file_path = g_strdup(file_path);
-	}
+
+	// Copy and store new file path
+	LibraryData.file_path = g_strdup(file_path);
 }
 
-static gboolean
-wf_library_file_is_default(void)
+/**
+ * wf_library_get_file:
+ *
+ * Gets the filepath of the library file in use.
+ *
+ * Returns: (transfer none): path to the current library file
+ *
+ * Since: 0.2
+ **/
+const gchar *
+wf_library_get_file(void)
 {
-	// Compare pointers
-	return (LibraryData.file_path == LibraryData.default_path);
+	return LibraryData.file_path;
 }
 
 gboolean
@@ -1383,13 +1389,9 @@ wf_library_finalize(void)
 	// Write any made changes to disk
 	wf_library_write(FALSE);
 
-	if (!wf_library_file_is_default())
-	{
-		wf_memory_clear_str(&LibraryData.default_path);
-	}
-
+	// Free file data
 	g_free(LibraryData.file_path);
-
+	g_free(LibraryData.default_path);
 	wf_memory_clear_key_file(&LibraryData.key_file);
 
 	LibraryData = (WfLibraryDetails) { 0 };
