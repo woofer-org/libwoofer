@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  *
  * library.c  This file is part of LibWoofer
- * Copyright (C) 2021, 2022  Quico Augustijn
+ * Copyright (C) 2021-2023  Quico Augustijn
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -209,6 +209,16 @@ wf_library_connect_event_stats_updated(WfFuncStatsUpdated cb_func)
 	LibraryData.events.stats_updated = cb_func;
 }
 
+/**
+ * wf_library_set_file:
+ * @file_path: (transfer none): path to the library file to use
+ *
+ * Sets the filepath of the library file to use.  This file may or may not
+ * actually exist; it will be (over)written whenever library changed are to be
+ * saved.
+ *
+ * Since: 0.2
+ **/
 void
 wf_library_set_file(const gchar *file_path)
 {
