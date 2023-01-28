@@ -585,6 +585,16 @@ wf_settings_init(void)
 
 /* GETTERS/SETTERS BEGIN */
 
+/**
+ * wf_settings_set_file:
+ * @file_path: (transfer none): path to the settings file to use
+ *
+ * Sets the filepath of the settings file to use.  This file may or may not
+ * actually exist; it will be (over)written whenever settings are changed and
+ * applied.
+ *
+ * Since: 0.2
+ **/
 void
 wf_settings_set_file(const gchar *file_path)
 {

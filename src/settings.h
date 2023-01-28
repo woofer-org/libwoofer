@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  *
  * settings.h  This file is part of LibWoofer
- * Copyright (C) 2021, 2022  Quico Augustijn
+ * Copyright (C) 2021-2023  Quico Augustijn
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,6 +96,8 @@ enum _WfSettingType
 /* CONSTRUCTOR PROTOTYPES END */
 
 /* GETTER/SETTER PROTOTYPES BEGIN */
+
+void wf_settings_set_file(const gchar *file_path);
 
 gboolean wf_settings_static_get_bool(WfSettingType type);
 void wf_settings_static_set_bool(WfSettingType type, gboolean v_bool);
