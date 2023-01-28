@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  *
  * app.h  This file is part of LibWoofer
- * Copyright (C) 2022  Quico Augustijn
+ * Copyright (C) 2022, 2023  Quico Augustijn
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,6 +84,9 @@ struct _WfAppClass
 /* MODULE TYPES END */
 
 /* CONSTRUCTOR PROTOTYPES BEGIN */
+
+WfApp * wf_app_new(void);
+
 /* CONSTRUCTOR PROTOTYPES END */
 
 /* GETTER/SETTER PROTOTYPES BEGIN */

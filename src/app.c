@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  *
  * app.c  This file is part of LibWoofer
- * Copyright (C) 2022  Quico Augustijn
+ * Copyright (C) 2022, 2023  Quico Augustijn
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -268,6 +268,22 @@ static const GActionEntry WfAppActions[] =
 /* GLOBAL VARIABLES END */
 
 /* CONSTRUCTORS BEGIN */
+
+/**
+ * wf_app_new:
+ *
+ * Creates a new #WfApp object.
+ *
+ * Returns: (transfer full): a new #WfApp instance.  Unref it with
+ * g_object_unref() at the end of the application life cycle.
+ *
+ * Since: 0.2
+ **/
+WfApp *
+wf_app_new(void)
+{
+	return (WfApp *) g_object_new(WF_TYPE_APP, NULL /* terminator */);
+}
 
 // This gets invoked when the class should initialize
 static void
