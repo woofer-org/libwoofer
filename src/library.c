@@ -228,6 +228,21 @@ wf_library_set_file(const gchar *file_path)
 	LibraryData.file_path = g_strdup(file_path);
 }
 
+/**
+ * wf_library_get_file:
+ *
+ * Gets the filepath of the library file in use.
+ *
+ * Returns: (transfer none): path to the current library file
+ *
+ * Since: 0.2
+ **/
+const gchar *
+wf_library_get_file(void)
+{
+	return LibraryData.file_path;
+}
+
 gboolean
 wf_library_track_number_column_is_empty(void)
 {

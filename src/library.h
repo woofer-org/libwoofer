@@ -63,6 +63,7 @@ enum _WfLibraryFileChecks
 void wf_library_connect_event_stats_updated(WfFuncStatsUpdated cb_func);
 
 void wf_library_set_file(const gchar *file_path);
+const gchar * wf_library_get_file(void);
 
 gboolean wf_library_track_number_column_is_empty(void);
 gboolean wf_library_title_column_is_empty(void);

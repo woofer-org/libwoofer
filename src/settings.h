@@ -98,6 +98,7 @@ enum _WfSettingType
 /* GETTER/SETTER PROTOTYPES BEGIN */
 
 void wf_settings_set_file(const gchar *file_path);
+const gchar * wf_settings_get_file(void);
 
 gboolean wf_settings_static_get_bool(WfSettingType type);
 void wf_settings_static_set_bool(WfSettingType type, gboolean v_bool);

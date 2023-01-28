@@ -606,6 +606,21 @@ wf_settings_set_file(const gchar *file_path)
 	SettingsData.file_path = g_strdup(file_path);
 }
 
+/**
+ * wf_settings_get_file:
+ *
+ * Gets the filepath of the settings file in use.
+ *
+ * Returns: (transfer none): path to the current settings file
+ *
+ * Since: 0.2
+ **/
+const gchar *
+wf_settings_get_file(void)
+{
+	return SettingsData.file_path;
+}
+
 static void
 wf_settings_static_get_by_type(WfSettingType setting, WfSettingValueType type, WfSettingValue *value)
 {
