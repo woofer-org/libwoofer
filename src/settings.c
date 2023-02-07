@@ -243,6 +243,12 @@ static WfStaticSetting GeneralSettings[] =
 		{ .v_double = 100.0 },
 	},
 	{
+		// Location prefix to use for library songs
+		"SongPrefix",
+		WF_SETTING_SONG_PREFIX,
+		SETTING_VALUE_STR,
+	},
+	{
 		// Interval to use to update the interface
 		"UpdateInterval",
 		WF_SETTING_UPDATE_INTERVAL,
