@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  *
  * song.h  This file is part of LibWoofer
- * Copyright (C) 2021, 2022  Quico Augustijn
+ * Copyright (C) 2021-2023  Quico Augustijn
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -135,6 +135,7 @@ gint64 wf_song_get_last_played(const WfSong *song);
 gchar * wf_song_get_played_on_as_string(const WfSong *song);
 gchar * wf_song_get_last_played_as_string(const WfSong *song);
 
+gboolean wf_song_uses_prefix(const WfSong *song);
 gboolean wf_song_is_in_list(const WfSong *song);
 gboolean wf_song_get_queued(const WfSong *song);
 gboolean wf_song_get_stop_flag(const WfSong *song);

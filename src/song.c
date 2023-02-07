@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  *
  * song.c  This file is part of LibWoofer
- * Copyright (C) 2021, 2022  Quico Augustijn
+ * Copyright (C) 2021-2023  Quico Augustijn
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,6 +109,7 @@ struct _WfSongPrivate
 
 	WfSongStatus status; // Current item's status
 	gint64 fs_modified; // Timestamp of last modification in filesystem
+	gboolean uses_prefix; // %TRUE if the URI uses the global song prefix
 	gboolean in_list; // %TRUE if currently in the library
 	gboolean queued; // %TRUE if the song is in the queue
 	gboolean stop_after_playing; // %TRUE if the playback should stop after this song
@@ -148,6 +149,7 @@ enum _WfProp
 	WF_PROP_NAME,
 	WF_PROP_DISPLAY_NAME,
 	WF_PROP_MODIFIED,
+	WF_PROP_USES_PREFIX,
 	WF_PROP_IN_LIST,
 	WF_PROP_QUEUED,
 	WF_PROP_STOP,
@@ -404,6 +406,23 @@ wf_song_class_init(gpointer g_class, gpointer class_data)
 	                          G_MAXINT64,
 	                          0,
 	                          G_PARAM_READABLE);
+	WfProperties[prop_id] = prop;
+	g_object_class_install_property(object_class, prop_id, prop);
+
+	/**
+	 * WfSong:uses-prefix:
+	 *
+	 * Whether the location of this song is depended on the global song
+	 * prefix.  When %FALSE, the location of the song is defined absolute.
+	 *
+	 * Since: 0.2
+	 **/
+	prop_id = WF_PROP_USES_PREFIX;
+	prop = g_param_spec_boolean("uses-prefix",
+	                            "Uses prefix",
+	                            "%TRUE if the location of the song uses the global song prefix",
+	                            FALSE,
+	                            G_PARAM_READABLE);
 	WfProperties[prop_id] = prop;
 	g_object_class_install_property(object_class, prop_id, prop);
 
@@ -1886,6 +1905,25 @@ wf_song_get_last_played_as_string(const WfSong *song)
 	last_played = wf_song_get_last_played(song);
 
 	return wf_song_last_played_to_string(last_played);
+}
+
+/**
+ * wf_song_uses_prefix:
+ *
+ * Gets whether the location of a given song is depended on the global song
+ * prefix.  See the #WfSong:uses-prefix property.
+ *
+ * Returns: %TRUE if the location is depended on the global song prefix, %FALSE
+ * if the location is defined absolute.
+ *
+ * Since: 0.2
+ **/
+gboolean
+wf_song_uses_prefix(const WfSong *song)
+{
+	g_return_val_if_fail(WF_IS_SONG(song), FALSE);
+
+	return song->priv->uses_prefix;
 }
 
 /**
