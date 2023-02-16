@@ -1595,6 +1595,8 @@ wf_settings_update_dynamic(GKeyFile *key_file, GSList *settings)
 static void
 wf_settings_update_item(GKeyFile *key_file, const gchar *name, const gchar *group, WfSettingValueType type, WfSettingValue *value)
 {
+	const gchar *str;
+
 	g_return_if_fail(key_file != NULL);
 	g_return_if_fail(name != NULL);
 	g_return_if_fail(value != NULL);
@@ -1620,7 +1622,8 @@ wf_settings_update_item(GKeyFile *key_file, const gchar *name, const gchar *grou
 			g_key_file_set_double(key_file, group, name, value->v_double);
 			break;
 		case SETTING_VALUE_STR:
-			g_key_file_set_string(key_file, group, name, value->v_str);
+			str = (value->v_str != NULL) ? value->v_str : "";
+			g_key_file_set_string(key_file, group, name, str);
 			break;
 		default:
 			g_warning("Invalid type for key %s (%s)", name, group);
