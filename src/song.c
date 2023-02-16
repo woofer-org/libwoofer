@@ -1230,6 +1230,7 @@ gchar *
 wf_song_get_uri(const WfSong *song)
 {
 	const gchar *prefix;
+	const gchar *str;
 	gchar *uri;
 
 	g_return_val_if_fail(WF_IS_SONG(song), NULL);
@@ -1238,8 +1239,11 @@ wf_song_get_uri(const WfSong *song)
 
 	if (prefix != NULL && song->priv->uses_prefix)
 	{
+		// Only use the part of the string after the prefix
+		str = song->priv->uri+strlen(WF_SONG_PREFIX);
+
 		// Replace the prefix text with the actual prefix text
-		uri = g_strjoin(NULL /* separator */, prefix, song->priv->uri+strlen(WF_SONG_PREFIX), NULL /* terminator */);
+		uri = g_strjoin(NULL /* separator */, prefix, str, NULL /* terminator */);
 	}
 	else
 	{
