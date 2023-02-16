@@ -106,7 +106,8 @@ guint32 wf_song_get_hash(WfSong *song);
 const gchar * wf_song_get_tag(WfSong *song);
 
 GFile * wf_song_get_file(WfSong *song);
-const gchar * wf_song_get_uri(const WfSong *song);
+gchar * wf_song_get_uri(const WfSong *song);
+const gchar * wf_song_get_plain_uri(const WfSong *song);
 const gchar * wf_song_get_name(const WfSong *song);
 const gchar * wf_song_get_name_not_empty(const WfSong *song);
 const gchar * wf_song_get_display_name(const WfSong *song);
