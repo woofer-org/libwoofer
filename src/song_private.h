@@ -48,6 +48,8 @@ gint64 wf_song_get_metadata_updated(const WfSong *song);
 void wf_song_set_metadata_updated(WfSong *song, gint64 timestamp);
 void wf_song_set_metadata_updated_now(WfSong *song);
 
+void wf_song_refresh_locations(WfSong *song);
+
 void wf_song_set_title(WfSong *song, const gchar *title);
 void wf_song_set_artist(WfSong *song, const gchar *artist);
 void wf_song_set_album_artist(WfSong *song, const gchar *artist);

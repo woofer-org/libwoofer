@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  *
  * song.c  This file is part of LibWoofer
- * Copyright (C) 2021, 2022  Quico Augustijn
+ * Copyright (C) 2021-2023  Quico Augustijn
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@
 
 // Dependency includes
 #include <woofer/song_metadata.h>
+#include <woofer/settings.h>
 #include <woofer/utils.h>
 #include <woofer/characters.h>
 #include <woofer/memory.h>
@@ -96,6 +97,9 @@
 #define WF_SONG_FILE_INFO G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME "," \
                           G_FILE_ATTRIBUTE_TIME_MODIFIED
 
+// Search string of the prefix indicator
+#define WF_SONG_PREFIX "$PREFIX"
+
 /* DEFINES END */
 
 /* CUSTOM TYPES BEGIN */
@@ -109,6 +113,7 @@ struct _WfSongPrivate
 
 	WfSongStatus status; // Current item's status
 	gint64 fs_modified; // Timestamp of last modification in filesystem
+	gboolean uses_prefix; // %TRUE if the URI uses the global song prefix
 	gboolean in_list; // %TRUE if currently in the library
 	gboolean queued; // %TRUE if the song is in the queue
 	gboolean stop_after_playing; // %TRUE if the playback should stop after this song
@@ -148,6 +153,7 @@ enum _WfProp
 	WF_PROP_NAME,
 	WF_PROP_DISPLAY_NAME,
 	WF_PROP_MODIFIED,
+	WF_PROP_USES_PREFIX,
 	WF_PROP_IN_LIST,
 	WF_PROP_QUEUED,
 	WF_PROP_STOP,
@@ -191,6 +197,7 @@ static void wf_song_set_modified(WfSong *song, gint64 timestamp);
 static void wf_song_get_property(GObject *object, guint property_id, GValue *value, GParamSpec *pspec);
 static void wf_song_set_property(GObject *object, guint property_id, const GValue *value, GParamSpec *pspec);
 
+static void wf_song_clear_gfile(WfSong *song);
 static void wf_song_clear_location(WfSong *song);
 
 static WfSong * wf_song_prepend_song(WfSong *song);
@@ -204,6 +211,8 @@ static WfSong * wf_song_ref_sink(WfSong *song);
 static gboolean wf_song_is_valid_status(WfSongStatus state);
 
 static gchar * wf_song_new_tag(guint32 hash);
+
+static gboolean wf_song_has_prefix(const gchar *uri);
 
 static gchar * wf_song_last_played_to_string(gint64 last_played);
 static gchar * wf_song_last_played_to_played_on_string(gint64 last_played, gboolean include_time);
@@ -404,6 +413,23 @@ wf_song_class_init(gpointer g_class, gpointer class_data)
 	                          G_MAXINT64,
 	                          0,
 	                          G_PARAM_READABLE);
+	WfProperties[prop_id] = prop;
+	g_object_class_install_property(object_class, prop_id, prop);
+
+	/**
+	 * WfSong:uses-prefix:
+	 *
+	 * Whether the location of this song is depended on the global song
+	 * prefix.  When %FALSE, the location of the song is defined absolute.
+	 *
+	 * Since: 0.2
+	 **/
+	prop_id = WF_PROP_USES_PREFIX;
+	prop = g_param_spec_boolean("uses-prefix",
+	                            "Uses prefix",
+	                            "%TRUE if the location of the song uses the global song prefix",
+	                            FALSE,
+	                            G_PARAM_READABLE);
 	WfProperties[prop_id] = prop;
 	g_object_class_install_property(object_class, prop_id, prop);
 
@@ -1133,15 +1159,22 @@ wf_song_set_metadata_updated_now(WfSong *song)
 GFile *
 wf_song_get_file(WfSong *song)
 {
+	gchar *uri;
+
 	g_return_val_if_fail(WF_IS_SONG(song), NULL);
 
-	// Create and sink #GFile if not present
+	// Create a new #GFile if not present
 	if (song->priv->file == NULL)
 	{
-		song->priv->file = g_file_new_for_uri(song->priv->uri);
+		uri = wf_song_get_uri(song);
+
+		song->priv->file = g_file_new_for_uri(uri);
+
+		g_free(uri);
 	}
 
-	return song->priv->file;
+	// Sink its reference and return the object
+	return g_object_ref_sink(song->priv->file);
 }
 
 /*
@@ -1177,17 +1210,62 @@ wf_song_set_file(WfSong *song, GFile *file)
 	g_free(uri);
 }
 
+void
+wf_song_refresh_locations(WfSong *song)
+{
+	wf_song_clear_gfile(song);
+}
+
 /**
  * wf_song_get_uri:
  *
  * Gets the URI for a given song.  See the #WfSong:uri property.
  *
- * Returns: (transfer none): the URI of a song
+ * Returns: (transfer full): the URI of a song.  Free it with g_free() when no
+ * longer needed.
  *
  * Since: 0.1
  **/
-const gchar *
+gchar *
 wf_song_get_uri(const WfSong *song)
+{
+	const gchar *prefix;
+	const gchar *str;
+	gchar *uri;
+
+	g_return_val_if_fail(WF_IS_SONG(song), NULL);
+
+	prefix = wf_settings_static_get_str(WF_SETTING_SONG_PREFIX);
+
+	if (prefix != NULL && song->priv->uses_prefix)
+	{
+		// Only use the part of the string after the prefix
+		str = song->priv->uri+strlen(WF_SONG_PREFIX);
+
+		// Replace the prefix text with the actual prefix text
+		uri = g_strjoin(NULL /* separator */, prefix, str, NULL /* terminator */);
+	}
+	else
+	{
+		// Just use the URI as is
+		uri = g_strdup(song->priv->uri);
+	}
+
+	return uri;
+}
+
+/**
+ * wf_song_get_plain_uri:
+ *
+ * Gets the URI for a given song, without resolving any prefixes.  See the
+ * #WfSong:plain-uri property.
+ *
+ * Returns: (transfer none): the plain URI of a song
+ *
+ * Since: 0.2
+ **/
+const gchar *
+wf_song_get_plain_uri(const WfSong *song)
 {
 	g_return_val_if_fail(WF_IS_SONG(song), NULL);
 
@@ -1227,6 +1305,9 @@ wf_song_set_uri_internal(WfSong *song, const gchar *uri)
 	// Allocate and set new values
 	song->priv->name = g_path_get_basename(song->priv->uri);
 	song->priv->song_hash = wf_chars_get_hash(song->priv->uri);
+
+	// Figure out if the URI uses the global song prefix
+	song->priv->uses_prefix = wf_song_has_prefix(song->priv->uri);
 }
 
 /**
@@ -1889,6 +1970,25 @@ wf_song_get_last_played_as_string(const WfSong *song)
 }
 
 /**
+ * wf_song_uses_prefix:
+ *
+ * Gets whether the location of a given song is depended on the global song
+ * prefix.  See the #WfSong:uses-prefix property.
+ *
+ * Returns: %TRUE if the location is depended on the global song prefix, %FALSE
+ * if the location is defined absolute.
+ *
+ * Since: 0.2
+ **/
+gboolean
+wf_song_uses_prefix(const WfSong *song)
+{
+	g_return_val_if_fail(WF_IS_SONG(song), FALSE);
+
+	return song->priv->uses_prefix;
+}
+
+/**
  * wf_song_is_in_list:
  *
  * Gets the value of the in list flag.  See the #WfSong:in-list property.
@@ -2310,6 +2410,22 @@ wf_song_reset_stats(WfSong *song)
 }
 
 /*
+ * wf_song_clear_gfile:
+ *
+ * Clear the local #GFile instance.
+ *
+ * Since: 0.2
+ */
+static void
+wf_song_clear_gfile(WfSong *song)
+{
+	g_return_if_fail(WF_IS_SONG(song));
+
+	// Free old values if set
+	wf_memory_clear_object((GObject **) &song->priv->file);
+}
+
+/*
  * wf_song_clear_location:
  *
  * Reset and clear the properties that gives a song its unique location.
@@ -2321,8 +2437,10 @@ wf_song_clear_location(WfSong *song)
 {
 	g_return_if_fail(WF_IS_SONG(song));
 
+	// Clear the #GFile
+	wf_song_clear_gfile(song);
+
 	// Free old values if set
-	wf_memory_clear_object((GObject **) &song->priv->file);
 	g_free(song->priv->uri);
 	g_free(song->priv->name);
 	g_free(song->priv->display_name);
@@ -2808,6 +2926,12 @@ wf_song_new_tag(guint32 hash)
 	hex = g_strdup_printf("song-%x", hash);
 
 	return hex;
+}
+
+static gboolean
+wf_song_has_prefix(const gchar *uri)
+{
+	return g_str_has_prefix(uri, WF_SONG_PREFIX);
 }
 
 static gchar *
