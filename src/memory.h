@@ -31,6 +31,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -50,6 +52,8 @@ void wf_memory_clear_variant(GVariant **value);
 void wf_memory_clear_key_file(GKeyFile **key_file);
 
 /* FUNCTION PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_MEMORY__ */
 

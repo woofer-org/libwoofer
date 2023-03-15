@@ -28,6 +28,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -190,6 +192,8 @@ void wf_mpris_flush_changes(void);
 void wf_mpris_deactivate(void);
 
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_MPRIS__ */
 

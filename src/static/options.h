@@ -28,6 +28,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* MODULE TYPES BEGIN */
 
 typedef struct _WfApplicationEntries WfApplicationEntries;
@@ -68,6 +70,8 @@ const GOptionEntry * wf_option_entries_get_main(void);
 const GOptionEntry * wf_option_entries_get_app(void);
 
 /* FUNCTION PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_STATIC_OPTIONS__ */
 

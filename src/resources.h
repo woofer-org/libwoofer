@@ -28,11 +28,15 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* RESOURCES BEGIN */
 
 #define WF_RESOURCE_ICON256_SVG WF_PATH "/icon256.svg"
 
 /* RESOURCES END */
+
+G_END_DECLS
 
 #endif /* __WF_RESOURCES__ */
 

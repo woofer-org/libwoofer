@@ -31,6 +31,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -57,6 +59,8 @@ gchar * wf_utils_get_config_filepath(const gchar *filename, const gchar *app_nam
 gboolean wf_utils_save_file_to_disk(GKeyFile *key_file, const gchar *filename, GError **error);
 
 /* FUNCTION PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_UTILS_PRIVATE__ */
 

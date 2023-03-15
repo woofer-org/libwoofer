@@ -28,6 +28,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -70,6 +72,8 @@ WfDList * wf_d_list_last(WfDList *list);
 void wf_d_list_free(WfDList *list);
 
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_DLIST__ */
 

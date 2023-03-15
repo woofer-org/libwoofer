@@ -28,6 +28,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -55,6 +57,8 @@ void wf_remote_setup(GDBusConnection *connection);
 void wf_remote_finalize(void);
 
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_REMOTE__ */
 

@@ -30,6 +30,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 
 #define WF_TYPE_SONG (wf_song_get_type())
@@ -164,6 +166,8 @@ void wf_song_remove(WfSong *song);
 
 /* DESTRUCTOR PROTOTYPES BEGIN */
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_SONG__ */
 

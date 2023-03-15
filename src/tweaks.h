@@ -29,6 +29,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 
 #ifndef G_APPLICATION_CAN_OVERRIDE_APP_ID
@@ -45,6 +47,8 @@
 GDateTime * wf_tweaks_file_info_get_modification_date_time(GFileInfo *info);
 
 /* FUNCTION PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_TWEAKS__ */
 

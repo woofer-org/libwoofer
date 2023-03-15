@@ -30,6 +30,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -61,6 +63,8 @@ GSList * wf_utils_files_strv_to_slist(gchar **strv);
 gboolean wf_utils_file_is_dotfile(GFile *file);
 
 /* FUNCTION PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_UTILS__ */
 

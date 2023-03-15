@@ -28,6 +28,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -157,6 +159,8 @@ gboolean wf_song_metadata_parse(WfSongMetadata *metadata);
 void wf_song_metadata_free(WfSongMetadata *metadata);
 
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_SONG_METADATA__ */
 

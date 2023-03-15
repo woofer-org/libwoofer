@@ -28,6 +28,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -159,6 +161,8 @@ wf_intelligence_filter(GList *available_songs,
                        WfSongFilter *filter);
 
 /* FUNCTION PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_INTELLIGENCE__ */
 

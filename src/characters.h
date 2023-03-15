@@ -28,6 +28,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -40,6 +42,8 @@ guint32 wf_chars_get_hash(const gchar *str);
 guint32 wf_chars_get_hash_converted(const gchar *str);
 
 /* FUNCTION PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_CHARACTERS__ */
 

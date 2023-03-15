@@ -31,6 +31,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -63,6 +65,8 @@ void wf_library_queue_write(void);
 void wf_library_finalize(void);
 
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_LIBRARY_PRIVATE__ */
 

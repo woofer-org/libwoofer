@@ -30,6 +30,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -72,6 +74,8 @@ gdouble wf_stats_score_invert(gdouble score);
 
 /* DESTRUCTOR PROTOTYPES BEGIN */
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_STATISTICS__ */
 

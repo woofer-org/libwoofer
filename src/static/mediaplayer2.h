@@ -28,6 +28,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* FUNCTION PROTOTYPES BEGIN */
 
 GDBusInterfaceInfo * mp2_org_mpris_mediaplayer2_get_interface_info(void);
@@ -35,6 +37,8 @@ GDBusInterfaceInfo * mp2_org_mpris_mediaplayer2_get_interface_info(void);
 GDBusInterfaceInfo * mp2_org_mpris_mediaplayer2_player_get_interface_info(void);
 
 /* FUNCTION PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_STATIC_MEDIAPLAYER2__ */
 

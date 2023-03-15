@@ -31,6 +31,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -89,6 +91,8 @@ void wf_song_manager_sync(void);
 void wf_song_manager_finalize(void);
 
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __SONG_MANAGER__ */
 

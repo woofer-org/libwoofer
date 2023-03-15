@@ -30,6 +30,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 
 #define WF_SETTINGS_FILENAME "settings.conf"
@@ -161,6 +163,8 @@ guint32 wf_settings_get_id_from_name(const gchar *name);
 
 /* DESTRUCTOR PROTOTYPES BEGIN */
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_SETTINGS__ */
 

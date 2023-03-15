@@ -29,6 +29,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -68,6 +70,8 @@ GSList * wf_file_inspector_get_directory_files(GFile *file);
 
 /* DESTRUCTOR PROTOTYPES BEGIN */
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_FILE_INSPECTOR__ */
 

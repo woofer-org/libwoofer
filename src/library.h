@@ -31,6 +31,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 
 #define WF_LIBRARY_FILENAME "library.conf"
@@ -106,6 +108,8 @@ void wf_library_remove_song(WfSong *song);
 
 /* DESTRUCTOR PROTOTYPES BEGIN */
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_LIBRARY__ */
 

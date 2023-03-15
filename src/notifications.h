@@ -31,6 +31,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -72,6 +74,8 @@ gchar * wf_notifications_get_default_player_message(WfSong *song, gint64 duratio
 void wf_notifications_finalize(void);
 
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_NOTIFICATION__ */
 

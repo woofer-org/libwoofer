@@ -28,6 +28,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* FUNCTION PROTOTYPES BEGIN */
 
 GDBusInterfaceInfo * wf_org_woofer_app_get_interface_info(void);
@@ -35,6 +37,8 @@ GDBusInterfaceInfo * wf_org_woofer_app_get_interface_info(void);
 GDBusInterfaceInfo * wf_org_woofer_player_get_interface_info(void);
 
 /* FUNCTION PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_STATIC_GDBUS__ */
 

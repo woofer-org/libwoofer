@@ -30,6 +30,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 /* DEFINES END */
 
@@ -110,6 +112,8 @@ void wf_player_seek_percentage(gdouble percentage);
 void wf_player_finalize(void);
 
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_PLAYER__ */
 

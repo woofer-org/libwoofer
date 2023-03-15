@@ -32,6 +32,8 @@
 
 /* INCLUDES END */
 
+G_BEGIN_DECLS
+
 /* DEFINES BEGIN */
 
 #define WF_TYPE_APP (wf_app_get_type())
@@ -141,6 +143,8 @@ void wf_app_set_playback_percentage(gdouble position);
 
 /* DESTRUCTOR PROTOTYPES BEGIN */
 /* DESTRUCTOR PROTOTYPES END */
+
+G_END_DECLS
 
 #endif /* __WF_APP__ */
 
