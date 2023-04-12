@@ -570,8 +570,6 @@ wf_settings_init(void)
 
 	SettingsData.default_path = wf_utils_get_config_filepath(WF_SETTINGS_FILENAME, WF_TAG);
 
-	wf_settings_set_file(SettingsData.default_path);
-
 	SettingsData.general_settings = GeneralSettings;
 	SettingsData.filter_settings = FilterSettings;
 	SettingsData.entry_settings = EntrySettings;
@@ -589,7 +587,7 @@ wf_settings_init(void)
 
 /**
  * wf_settings_set_file:
- * @file_path: (transfer none): path to the settings file to use
+ * @file_path: (transfer none) (nullable): path to the settings file to use
  *
  * Sets the filepath of the settings file to use.  This file may or may not
  * actually exist; it will be (over)written whenever settings are changed and
@@ -601,12 +599,6 @@ void
 wf_settings_set_file(const gchar *file_path)
 {
 	g_free(SettingsData.file_path);
-
-	if (file_path == NULL)
-	{
-		// Reset to default
-		file_path = SettingsData.default_path;
-	}
 
 	// Copy and store new file path
 	SettingsData.file_path = g_strdup(file_path);
@@ -624,7 +616,10 @@ wf_settings_set_file(const gchar *file_path)
 const gchar *
 wf_settings_get_file(void)
 {
-	return SettingsData.file_path;
+	const gchar *file_path = SettingsData.file_path;
+	const gchar *default_path = SettingsData.default_path;
+
+	return (file_path != NULL) ? file_path : default_path;
 }
 
 static void
@@ -1639,7 +1634,7 @@ wf_settings_update_item(GKeyFile *key_file, const gchar *name, const gchar *grou
 gboolean
 wf_settings_read_file(void)
 {
-	const gchar *file = SettingsData.file_path;
+	const gchar *file = wf_settings_get_file();
 	GError *err = NULL;
 
 	g_return_val_if_fail(file != NULL, FALSE);
@@ -1680,6 +1675,8 @@ wf_settings_read_file(void)
 gboolean
 wf_settings_write(void)
 {
+	const gchar *file = wf_settings_get_file();
+
 	if (SettingsData.key_file == NULL)
 	{
 		SettingsData.key_file = g_key_file_new();
@@ -1687,7 +1684,7 @@ wf_settings_write(void)
 
 	wf_settings_update_keyfile(SettingsData.key_file);
 
-	if (wf_settings_keyfile_write(SettingsData.key_file, SettingsData.file_path))
+	if (wf_settings_keyfile_write(SettingsData.key_file, file))
 	{
 		SettingsData.write_queued = FALSE;
 

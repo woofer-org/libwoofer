@@ -188,8 +188,6 @@ wf_library_init(void)
 
 	LibraryData.default_path = wf_utils_get_config_filepath(WF_LIBRARY_FILENAME, WF_TAG);
 
-	wf_library_set_file(LibraryData.default_path);
-
 	LibraryData.active = TRUE;
 }
 
@@ -205,7 +203,7 @@ wf_library_connect_event_stats_updated(WfFuncStatsUpdated cb_func)
 
 /**
  * wf_library_set_file:
- * @file_path: (transfer none): path to the library file to use
+ * @file_path: (transfer none) (nullable): path to the library file to use
  *
  * Sets the filepath of the library file to use.  This file may or may not
  * actually exist; it will be (over)written whenever library changed are to be
@@ -217,12 +215,6 @@ void
 wf_library_set_file(const gchar *file_path)
 {
 	g_free(LibraryData.file_path);
-
-	if (file_path == NULL)
-	{
-		// Reset to default
-		file_path = LibraryData.default_path;
-	}
 
 	// Copy and store new file path
 	LibraryData.file_path = g_strdup(file_path);
@@ -240,7 +232,10 @@ wf_library_set_file(const gchar *file_path)
 const gchar *
 wf_library_get_file(void)
 {
-	return LibraryData.file_path;
+	const gchar *file_path = LibraryData.file_path;
+	const gchar *default_path = LibraryData.default_path;
+
+	return (file_path != NULL) ? file_path : default_path;
 }
 
 gboolean
@@ -852,7 +847,7 @@ wf_library_file_open(GKeyFile *key_file, const gchar *filename, GError **error)
 gboolean
 wf_library_read(void)
 {
-	const gchar *file = LibraryData.file_path;
+	const gchar *file = wf_library_get_file();
 	gboolean added = 0;
 	GKeyFile *key_file;
 
@@ -884,6 +879,7 @@ wf_library_read(void)
 gboolean
 wf_library_write(gboolean force)
 {
+	const gchar *file = wf_library_get_file();
 	GKeyFile *key_file;
 	GError *err = NULL;
 	gboolean res = FALSE;
@@ -904,7 +900,7 @@ wf_library_write(gboolean force)
 		return FALSE;
 	}
 
-	if (wf_utils_save_file_to_disk(key_file, LibraryData.file_path, &err))
+	if (wf_utils_save_file_to_disk(key_file, file, &err))
 	{
 		g_info("Successfully written library file to disk");
 		LibraryData.write_queued = FALSE;
