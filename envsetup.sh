@@ -27,5 +27,8 @@ REALPATH=`realpath -- "${0}"`
 DIR=`dirname -- "${REALPATH}"`
 
 export LD_LIBRARY_PATH="${DIR}/build"
+export PKG_CONFIG_PATH="${DIR}/data"
 export CFLAGS="-I${DIR}/src"
 export LDFLAGS="-L${DIR}/build"
+export WOOFER_CFLAGS=${CFLAGS}
+export WOOFER_LIBS=${LDFLAGS}
