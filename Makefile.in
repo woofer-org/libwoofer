@@ -81,7 +81,10 @@ TAG = lib$(PACKAGE_TARNAME)
 OUT_SHARED ?= $(TAG).so
 OUT_STATIC ?= $(TAG).a
 DIST_PKG = $(TAG)-$(VERSION)
+
+# Installation paths
 INC_DIR = $(includedir)/$(PACKAGE_TARNAME)
+PKGCONFIG_PATH = $(libdir)/pkgconfig
 
 # Dependencies and targets
 PREREQUISITE_LIB = app song player library settings intelligence song_manager \
@@ -91,6 +94,7 @@ PREREQUISITE_LIB = app song player library settings intelligence song_manager \
                    static/options static/resources
 HEADERS = woofer.h app.h song.h intelligence.h settings.h library.h utils.h \
           authors.h constants.h resources.h
+PKGCONFIG_FILE = woofer.pc
 TAR_FILES = AUTHORS BUGS CODE_OF_CONDUCT.md configure configure.ac \
             CONTRIBUTING.md COPYING envsetup.sh INSTALL install-sh \
             Makefile.fallback Makefile.in README.md $(TAG).doap
@@ -147,12 +151,14 @@ install:
 	$(INSTALL_DATA) $(TARGET_SHARED) $(DESTDIR)$(libdir)/$(OUT_SHARED)
 	$(INSTALL_DATA) $(TARGET_STATIC) $(DESTDIR)$(libdir)/$(OUT_STATIC)
 	$(INSTALL_DATA) $(INC_FILES) $(DESTDIR)$(INC_DIR)/
+	$(INSTALL_DATA) $(DATA_DIR)/$(PKGCONFIG_FILE) $(DESTDIR)$(PKGCONFIG_PATH)/
 
 # Uninstall installed files
 uninstall:
 	-rm -fv $(DESTDIR)$(libdir)/$(OUT_SHARED)
 	-rm -fv $(DESTDIR)$(libdir)/$(OUT_STATIC)
 	-rm -fv $(DESTDIR)$(INC_DIR)/*
+	-rm -fv $(DESTDIR)$(PKGCONFIG_PATH)/$(PKGCONFIG_FILE)
 
 # Recompile resource files
 resources: resources/resources.gresource.xml
@@ -169,7 +175,7 @@ clean:
 # Clean all generated and compiled files
 distclean:
 	@$(MAKE) clean
-	-rm -frv autom4te.cache aclocal.m4 config.log config.status Makefile
+	-rm -frv autom4te.cache aclocal.m4 config.log config.status Makefile $(DATA_DIR)/$(PKGCONFIG_FILE)
 
 # Clean temporary files
 mostlyclean:
@@ -196,6 +202,7 @@ dist: $(TAR_FILES)
 installdirs:
 	@$(MKDIR_P) $(DESTDIR)$(libdir)
 	@$(MKDIR_P) $(DESTDIR)$(INC_DIR)
+	@$(MKDIR_P) $(DESTDIR)$(PKGCONFIG_PATH)
 
 # Reconfigure Makefile
 Makefile:
