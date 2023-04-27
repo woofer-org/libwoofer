@@ -59,5 +59,6 @@ PKG_CHECK_MODULES([GOBJECT], [gobject-2.0 >= 2.56.0])
 PKG_CHECK_MODULES([GSTREAMER], [gstreamer-1.0 >= 1.6.0])
 
 AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([data/woofer.pc])
 
 AC_OUTPUT

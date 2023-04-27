@@ -49,6 +49,7 @@ PREREQUISITE_LIB = app song player library settings intelligence song_manager \
                    file_inspector utils characters dlist memory tweaks \
                    static/gdbus static/gdbus static/mediaplayer2 \
                    static/options static/resources
+PKGCONFIG_FILE = woofer.pc
 TAR_FILES = AUTHORS BUGS CODE_OF_CONDUCT.md configure configure.ac \
             CONTRIBUTING.md COPYING envsetup.sh INSTALL install-sh \
             Makefile.fallback Makefile.in README.md $(TAG).doap
@@ -119,7 +120,7 @@ clean:
 # Clean all generated and compiled files
 distclean:
 	@$(MAKE) clean
-	-rm -frv autom4te.cache aclocal.m4 config.log config.status Makefile
+	-rm -frv autom4te.cache aclocal.m4 config.log config.status Makefile $(DATA_DIR)/$(PKGCONFIG_FILE)
 
 # Clean temporary files
 mostlyclean:
