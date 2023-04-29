@@ -57,6 +57,7 @@ main(int argc, char *argv[])
 When saved as `main.c`, this code can (assuming that the right compiler flags
 are set) be compiled with:
 
-`gcc main.c -o woofer -lm -lwoofer $(pkg-config --cflags --libs glib-2.0 gio-2.0
-gobject-2.0)`
+```sh
+gcc main.c -o woofer -lm -lwoofer $(pkg-config --cflags --libs glib-2.0 gio-2.0 gobject-2.0)
+```
 
