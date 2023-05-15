@@ -85,7 +85,7 @@ vpath %.h $(SRC_DIR)
 
 # Targets that do not generate any files
 .PHONY: all resources clean distclean mostlyclean maintainer-clean dist \
-        dist-gzip
+        dist-gzip dist-xz
 
 # Default target
 all: $(TARGET_SHARED) $(TARGET_STATIC)
@@ -145,4 +145,12 @@ dist-gzip: $(TAR_FILES)
 	cp -dflRux -t $(DIST_PKG) $(TAR_FILES) $(TAR_DIRS)
 	tar -c --remove-files --file=$(DIST_PKG).tar $(DIST_PKG)
 	gzip -9 -f $(DIST_PKG).tar
+	-rm -rf $(DIST_PKG)
+
+# Create a distribution tar file, compressed with xz
+dist-xz: $(TAR_FILES)
+	@$(MKDIR_P) $(DIST_PKG)
+	cp -dflRux -t $(DIST_PKG) $(TAR_FILES) $(TAR_DIRS)
+	tar -c --remove-files --file=$(DIST_PKG).tar $(DIST_PKG)
+	xz $(DIST_PKG).tar
 	-rm -rf $(DIST_PKG)
