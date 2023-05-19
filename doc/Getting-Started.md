@@ -68,8 +68,8 @@ To simplify the process of linking against the application library, a shell
 script called `envsetup.sh` is written that automatically sets the compiler
 flags to the right values so it is easier to compile and link the binaries.
 All you need to do is source the script in your current shell session with
-`source ./envsetup.sh`, go the repository of the front-end and execute the
-documented commands to compile and link.
+`. ./envsetup.sh`, go the repository of the front-end and execute the documented
+commands to compile and link.
 
 ## Using
 

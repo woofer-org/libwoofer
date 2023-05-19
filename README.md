@@ -62,7 +62,7 @@ automatically sets these flags to the location of this repository.  All you need
 to do is sourcing the file like:
 
 ```sh
-source ./envsetup.sh
+. ./envsetup.sh
 ```
 
 This will set the right flags in environmental variables of the current shell
