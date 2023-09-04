@@ -105,7 +105,7 @@ $(TARGET_STATIC): $(OBJS)
 
 # Shared library symbolic link creation
 $(TARGET_LINK): $(TARGET_SHARED)
-	$(LN_S) $^ $@
+	$(LN_S) -f $^ $@
 
 # Library object compilation
 $(BUILD_DIR)/%.o: %.c %.h
