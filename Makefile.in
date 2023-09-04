@@ -151,7 +151,7 @@ install:
 	$(MAKE) installdirs
 	$(INSTALL_DATA) $(TARGET_SHARED) $(DESTDIR)$(libdir)/$(OUT_SHARED)
 	$(INSTALL_DATA) $(TARGET_STATIC) $(DESTDIR)$(libdir)/$(OUT_STATIC)
-	$(INSTALL_DATA) $(TARGET_LINK) $(DESTDIR)$(libdir)/$(LINK_SHARED)
+	$(LN_S) -rf $(TARGET_LINK) $(DESTDIR)$(libdir)/$(LINK_SHARED)
 	$(INSTALL_DATA) $(INC_FILES) $(DESTDIR)$(INC_DIR)/
 
 # Uninstall installed files
