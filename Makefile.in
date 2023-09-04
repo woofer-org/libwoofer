@@ -23,7 +23,8 @@ SHELL = /bin/sh
 # Variables
 NAME = @PACKAGE_NAME@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
-VERSION = @PACKAGE_VERSION@
+PACKAGE_VERSION = @PACKAGE_VERSION@
+MAJOR_VERSION = @MAJOR_VERSION@
 CC = @CC@
 AR = @AR@
 RANLIB = @RANLIB@
@@ -78,9 +79,10 @@ mandir = @mandir@
 
 # Build information
 TAG = lib$(PACKAGE_TARNAME)
-OUT_SHARED ?= $(TAG).so
+OUT_SHARED ?= $(TAG).so.$(PACKAGE_VERSION)
 OUT_STATIC ?= $(TAG).a
-DIST_PKG = $(TAG)-$(VERSION)
+DIST_PKG = $(TAG)-$(PACKAGE_VERSION)
+LINK_SHARED ?= $(TAG).so.$(MAJOR_VERSION)
 
 # Installation paths
 INC_DIR = $(includedir)/$(PACKAGE_TARNAME)
@@ -114,6 +116,7 @@ DATA_DIR = data
 # Final library target
 TARGET_SHARED ?= $(BUILD_DIR)/$(OUT_SHARED)
 TARGET_STATIC ?= $(BUILD_DIR)/$(OUT_STATIC)
+TARGET_LINK ?= $(BUILD_DIR)/$(LINK_SHARED)
 
 # Sources and targets
 OBJS := $(PREREQUISITE_LIB:%=$(BUILD_DIR)/%.$(OBJ_EXT))
@@ -127,7 +130,7 @@ INC_FILES = $(HEADERS:%=$(SRC_DIR)/%)
         maintainer-clean dist dist-gzip dist-xz installdirs
 
 # Default target
-all: $(TARGET_SHARED) $(TARGET_STATIC)
+all: $(TARGET_SHARED) $(TARGET_STATIC) $(TARGET_LINK)
 
 # Final shared library linkage
 $(TARGET_SHARED): $(OBJS)
@@ -140,6 +143,10 @@ $(TARGET_STATIC): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 	$(RANLIB) $@
 
+# Shared library symbolic link creation
+$(TARGET_LINK): $(TARGET_SHARED)
+	$(LN_S) -rf $^ $@
+
 # Library object compilation
 $(BUILD_DIR)/%.$(OBJ_EXT): $(SRC_DIR)/%.c $(SRC_DIR)/%.h
 	@$(MKDIR_P) $(@D)
@@ -150,6 +157,7 @@ install:
 	$(MAKE) installdirs
 	$(INSTALL_DATA) $(TARGET_SHARED) $(DESTDIR)$(libdir)/$(OUT_SHARED)
 	$(INSTALL_DATA) $(TARGET_STATIC) $(DESTDIR)$(libdir)/$(OUT_STATIC)
+	$(LN_S) -rf $(TARGET_LINK) $(DESTDIR)$(libdir)/$(LINK_SHARED)
 	$(INSTALL_DATA) $(INC_FILES) $(DESTDIR)$(INC_DIR)/
 	$(INSTALL_DATA) $(DATA_DIR)/$(PKGCONFIG_FILE) $(DESTDIR)$(PKGCONFIG_PATH)/
 
@@ -157,6 +165,7 @@ install:
 uninstall:
 	-rm -fv $(DESTDIR)$(libdir)/$(OUT_SHARED)
 	-rm -fv $(DESTDIR)$(libdir)/$(OUT_STATIC)
+	-rm -fv $(DESTDIR)$(libdir)/$(LINK_SHARED)
 	-rm -fv $(DESTDIR)$(INC_DIR)/*
 	-rm -fv $(DESTDIR)$(PKGCONFIG_PATH)/$(PKGCONFIG_FILE)
 
@@ -170,7 +179,7 @@ resources: resources/resources.gresource.xml
 # Clean all compiled files
 clean:
 	@$(MAKE) mostlyclean
-	-rm -fv $(TARGET_SHARED) $(TARGET_STATIC)
+	-rm -fv $(TARGET_SHARED) $(TARGET_STATIC) $(TARGET_LINK)
 
 # Clean all generated and compiled files
 distclean:
