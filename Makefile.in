@@ -206,6 +206,7 @@ dist:
 dist-tar:
 	@$(MKDIR_P) $(DIST_PKG)
 	cp -dflRux -t $(DIST_PKG) $(TAR_FILES) $(TAR_DIRS)
+	-rm -f $(DIST_PKG)/*/$(PKGCONFIG_FILE)
 	tar -c --remove-files --file=$(DIST_PKG).tar $(DIST_PKG)
 	-rm -rf $(DIST_PKG)
 
